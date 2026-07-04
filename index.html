@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>MarketSpace — India's Smart Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css"/>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   DESIGN SYSTEM — Deep Teal + Amber accent, editorial feel
+═══════════════════════════════════════════════════════════ */
+:root {
+  --bg:         #0b0f14;
+  --bg2:        #111820;
+  --bg3:        #1a2330;
+  --border:     #1f2d3d;
+  --border2:    #2a3f55;
+  --text:       #e8edf3;
+  --text2:      #8fa3b8;
+  --text3:      #566d82;
+  --accent:     #f0a500;
+  --accent2:    #e08c00;
+  --teal:       #00c6b2;
+  --teal2:      #009e8e;
+  --danger:     #e84855;
+  --success:    #29d98e;
+  --card:       #131c27;
+  --card-hover: #172130;
+  --radius:     12px;
+  --radius-lg:  20px;
+  --shadow:     0 4px 24px rgba(0,0,0,0.5);
+  --shadow-lg:  0 8px 48px rgba(0,0,0,0.7);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{font-family:'Syne',sans-serif;font-weight:700}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;border:none;outline:none;font-family:inherit}
+input,select,textarea{font-family:inherit;outline:none}
+img{max-width:100%;display:block}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ══════════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════════ */
+.page{display:none;min-height:100vh;padding-top:72px}
+.page.active{display:block}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.container-wide{max-width:1400px;margin:0 auto;padding:0 24px}
+
+/* ══════════════════════════════════════════════
+   NAVBAR
+══════════════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(11,15,20,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  height:72px;
+}
+.nav-inner{
+  max-width:1400px;margin:0 auto;padding:0 24px;
+  height:72px;display:flex;align-items:center;gap:16px;
+}
+.nav-logo{
+  font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;
+  color:var(--accent);letter-spacing:-0.5px;flex-shrink:0;cursor:pointer;
+  display:flex;align-items:center;gap:8px;
+}
+.nav-logo span{color:var(--teal)}
+.nav-search{
+  flex:1;max-width:480px;position:relative;
+}
+.nav-search input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  border-radius:50px;padding:10px 20px 10px 44px;
+  color:var(--text);font-size:0.9rem;transition:.2s;
+}
+.nav-search input:focus{border-color:var(--teal);background:var(--bg2)}
+.nav-search input::placeholder{color:var(--text3)}
+.nav-search-icon{
+  position:absolute;left:16px;top:50%;transform:translateY(-50%);
+  color:var(--text3);pointer-events:none;
+}
+.nav-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+.nav-btn{
+  padding:9px 18px;border-radius:50px;font-size:0.875rem;
+  font-weight:500;transition:.2s;display:flex;align-items:center;gap:6px;
+}
+.nav-btn.ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}
+.nav-btn.ghost:hover{color:var(--text);border-color:var(--border2)}
+.nav-btn.filled{background:var(--accent);color:#000;font-weight:600}
+.nav-btn.filled:hover{background:var(--accent2)}
+.nav-btn.teal{background:var(--teal);color:#000;font-weight:600}
+.nav-btn.teal:hover{background:var(--teal2)}
+.notif-btn{
+  position:relative;width:42px;height:42px;border-radius:50%;
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text2);display:flex;align-items:center;justify-content:center;
+  transition:.2s;
+}
+.notif-btn:hover{color:var(--text);border-color:var(--border2)}
+.notif-badge{
+  position:absolute;top:6px;right:6px;width:8px;height:8px;
+  background:var(--danger);border-radius:50%;border:2px solid var(--bg);
+  display:none;
+}
+.notif-badge.show{display:block}
+.user-avatar{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;color:#000;
+  cursor:pointer;flex-shrink:0;
+}
+
+/* ══════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════ */
+.hero{
+  padding:80px 0 64px;
+  background:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(0,198,178,0.12),transparent),
+             radial-gradient(ellipse 60% 40% at 80% 60%,rgba(240,165,0,0.07),transparent);
+  text-align:center;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    0deg,transparent,transparent 40px,
+    rgba(255,255,255,0.01) 40px,rgba(255,255,255,0.01) 41px
+  ),
+  repeating-linear-gradient(
+    90deg,transparent,transparent 40px,
+    rgba(255,255,255,0.01) 40px,rgba(255,255,255,0.01) 41px
+  );
+  pointer-events:none;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);
+  padding:6px 16px;border-radius:50px;font-size:0.8rem;
+  color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;
+  font-weight:500;margin-bottom:24px;
+}
+.hero h1{
+  font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;
+  letter-spacing:-2px;margin-bottom:20px;
+}
+.hero h1 .line2{color:var(--teal)}
+.hero-sub{
+  font-size:1.1rem;color:var(--text2);max-width:560px;
+  margin:0 auto 40px;line-height:1.7;font-weight:300;
+}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{
+  padding:13px 28px;border-radius:50px;font-size:0.95rem;
+  font-weight:600;transition:.2s;display:inline-flex;align-items:center;gap:8px;
+  font-family:'Syne',sans-serif;
+}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 4px 20px rgba(240,165,0,0.3)}
+.btn-teal{background:var(--teal);color:#000}
+.btn-teal:hover{background:var(--teal2);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,198,178,0.3)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border2)}
+.btn-outline:hover{border-color:var(--text3);background:var(--bg3)}
+.btn-ghost{background:transparent;color:var(--text2)}
+.btn-ghost:hover{color:var(--text)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-danger:hover{opacity:0.9}
+.btn-sm{padding:8px 16px;font-size:0.82rem}
+.btn-xs{padding:6px 12px;font-size:0.78rem;border-radius:8px}
+
+/* ══════════════════════════════════════════════
+   STATS BAR
+══════════════════════════════════════════════ */
+.stats-bar{
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:var(--bg2);padding:24px 0;
+}
+.stats-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center;
+}
+.stat-val{
+  font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:700;
+  color:var(--accent);line-height:1;margin-bottom:4px;
+}
+.stat-lbl{color:var(--text3);font-size:0.8rem;text-transform:uppercase;letter-spacing:0.06em}
+
+/* ══════════════════════════════════════════════
+   CATEGORY BROWSER
+══════════════════════════════════════════════ */
+.section{padding:56px 0}
+.section-hd{
+  display:flex;align-items:baseline;justify-content:space-between;
+  margin-bottom:32px;
+}
+.section-title{
+  font-size:1.6rem;letter-spacing:-0.5px;
+}
+.section-title span{color:var(--teal)}
+.section-link{color:var(--accent);font-size:0.875rem;font-weight:500}
+.section-link:hover{text-decoration:underline}
+
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.cat-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px 16px;cursor:pointer;transition:.2s;text-align:center;
+  position:relative;overflow:hidden;
+}
+.cat-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,198,178,0.05),transparent);
+  opacity:0;transition:.2s;
+}
+.cat-card:hover{border-color:var(--teal);background:var(--card-hover);transform:translateY(-2px)}
+.cat-card:hover::before{opacity:1}
+.cat-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(0,198,178,0.15),rgba(240,165,0,0.1));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin:0 auto 12px;color:var(--teal);
+}
+.cat-name{font-family:'Syne',sans-serif;font-size:0.875rem;font-weight:600;margin-bottom:4px}
+.cat-count{color:var(--text3);font-size:0.75rem}
+
+/* ══════════════════════════════════════════════
+   LISTING CARDS
+══════════════════════════════════════════════ */
+.listings-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px;
+}
+.listing-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  overflow:hidden;cursor:pointer;transition:.25s;
+  display:flex;flex-direction:column;
+}
+.listing-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:var(--shadow)}
+.listing-img{
+  height:200px;background:var(--bg3);position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.listing-img img{width:100%;height:100%;object-fit:cover}
+.listing-img-placeholder{
+  font-size:3rem;opacity:0.3;color:var(--text3);
+}
+.listing-badge{
+  position:absolute;top:12px;left:12px;
+  padding:4px 10px;border-radius:50px;font-size:0.72rem;font-weight:600;
+  background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);
+}
+.badge-new{color:var(--success);border:1px solid rgba(41,217,142,0.3)}
+.badge-like-new{color:var(--teal);border:1px solid rgba(0,198,178,0.3)}
+.badge-good{color:var(--accent);border:1px solid rgba(240,165,0,0.3)}
+.listing-body{padding:16px;flex:1;display:flex;flex-direction:column}
+.listing-cat{font-size:0.72rem;color:var(--teal);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+.listing-title{
+  font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:600;
+  line-height:1.3;margin-bottom:8px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.listing-price{
+  font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;
+  color:var(--accent);margin-top:auto;
+}
+.listing-price span{font-size:0.85rem;font-weight:400;color:var(--text3)}
+.listing-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:12px;padding-top:12px;border-top:1px solid var(--border);
+}
+.listing-seller{font-size:0.78rem;color:var(--text3);display:flex;align-items:center;gap:4px}
+.listing-time{font-size:0.72rem;color:var(--text3)}
+
+/* ══════════════════════════════════════════════
+   SEARCH PAGE
+══════════════════════════════════════════════ */
+.search-layout{display:grid;grid-template-columns:260px 1fr;gap:32px;padding:32px 0}
+.filters-panel{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:24px;height:fit-content;position:sticky;top:88px;
+}
+.filter-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:20px;color:var(--text)}
+.filter-group{margin-bottom:24px}
+.filter-label{font-size:0.78rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;display:block}
+.filter-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;padding:9px 12px;color:var(--text);font-size:0.875rem;transition:.2s;
+}
+.filter-input:focus{border-color:var(--teal)}
+.filter-input option{background:var(--bg2)}
+.price-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.results-header{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;
+}
+.results-count{font-size:0.875rem;color:var(--text2)}
+.results-count strong{color:var(--text)}
+.sort-select{
+  background:var(--bg3);border:1px solid var(--border);border-radius:8px;
+  padding:8px 12px;color:var(--text);font-size:0.875rem;
+}
+.sort-select option{background:var(--bg2)}
+
+/* ══════════════════════════════════════════════
+   LISTING DETAIL PAGE
+══════════════════════════════════════════════ */
+.detail-layout{display:grid;grid-template-columns:1fr 380px;gap:40px;padding:40px 0}
+.detail-img{
+  border-radius:var(--radius-lg);overflow:hidden;background:var(--bg3);
+  aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;
+  font-size:5rem;color:var(--text3);border:1px solid var(--border);
+}
+.detail-img img{width:100%;height:100%;object-fit:cover}
+.detail-title{
+  font-size:1.8rem;font-weight:800;letter-spacing:-0.5px;margin-bottom:8px;
+}
+.detail-price{
+  font-size:2.4rem;font-weight:700;color:var(--accent);margin-bottom:20px;
+}
+.detail-badges{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.badge{
+  padding:5px 12px;border-radius:50px;font-size:0.78rem;font-weight:500;
+  background:var(--bg3);border:1px solid var(--border);color:var(--text2);
+}
+.badge.accent{background:rgba(240,165,0,0.1);border-color:rgba(240,165,0,0.3);color:var(--accent)}
+.badge.teal{background:rgba(0,198,178,0.1);border-color:rgba(0,198,178,0.3);color:var(--teal)}
+.detail-desc{color:var(--text2);line-height:1.8;margin-bottom:28px;font-size:0.95rem}
+.seller-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:24px;position:sticky;top:88px;
+}
+.seller-card-title{font-size:0.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px}
+.seller-info{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.seller-avatar-lg{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:#000;
+}
+.seller-name{font-family:'Syne',sans-serif;font-weight:600;margin-bottom:2px}
+.seller-loc{color:var(--text3);font-size:0.82rem;display:flex;align-items:center;gap:4px}
+.msg-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  border-radius:10px;padding:12px;color:var(--text);font-size:0.875rem;
+  resize:none;margin-bottom:12px;transition:.2s;
+}
+.msg-input:focus{border-color:var(--teal)}
+.breadcrumb{
+  display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--text3);
+  margin-bottom:8px;padding:24px 0 0;flex-wrap:wrap;
+}
+.breadcrumb span{cursor:pointer;transition:.15s}
+.breadcrumb span:hover{color:var(--teal)}
+.breadcrumb .sep{color:var(--border2)}
+
+/* ══════════════════════════════════════════════
+   POST LISTING PAGE
+══════════════════════════════════════════════ */
+.form-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:36px;max-width:720px;margin:40px auto;
+}
+.form-title{font-size:1.6rem;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px}
+.form-sub{color:var(--text3);font-size:0.875rem;margin-bottom:32px}
+.form-group{margin-bottom:22px}
+.form-label{
+  display:block;font-size:0.8rem;color:var(--text3);
+  text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;font-weight:500;
+}
+.form-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  border-radius:10px;padding:12px 16px;color:var(--text);font-size:0.9rem;
+  transition:.2s;
+}
+.form-input:focus{border-color:var(--teal);background:var(--bg2)}
+.form-input::placeholder{color:var(--text3)}
+.form-input option{background:var(--bg2)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-textarea{
+  resize:vertical;min-height:120px;
+}
+.cat-tree{
+  background:var(--bg3);border:1px solid var(--border);border-radius:10px;
+  padding:16px;max-height:240px;overflow-y:auto;
+}
+.cat-tree-item{
+  padding:8px 12px;border-radius:8px;cursor:pointer;
+  display:flex;align-items:center;gap:8px;transition:.15s;
+  font-size:0.875rem;color:var(--text2);
+}
+.cat-tree-item:hover{background:var(--bg2);color:var(--text)}
+.cat-tree-item.selected{background:rgba(0,198,178,0.1);color:var(--teal);font-weight:500}
+.cat-tree-item .indent{width:16px;display:inline-block}
+.cat-tree-item .has-children{margin-left:auto;color:var(--text3);font-size:0.7rem}
+
+/* ══════════════════════════════════════════════
+   ALERTS PAGE
+══════════════════════════════════════════════ */
+.alerts-layout{display:grid;grid-template-columns:1fr 1fr;gap:32px;padding:40px 0}
+.panel{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:28px;
+}
+.panel-title{font-size:1rem;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.panel-title svg{color:var(--teal)}
+.alert-item{
+  background:var(--bg3);border:1px solid var(--border);border-radius:10px;
+  padding:16px;margin-bottom:12px;display:flex;align-items:flex-start;gap:12px;
+}
+.alert-item-icon{
+  width:36px;height:36px;border-radius:8px;
+  background:rgba(0,198,178,0.1);border:1px solid rgba(0,198,178,0.2);
+  display:flex;align-items:center;justify-content:center;color:var(--teal);flex-shrink:0;
+}
+.alert-item-body{flex:1}
+.alert-item-cat{font-weight:600;font-size:0.9rem;margin-bottom:4px}
+.alert-item-meta{font-size:0.78rem;color:var(--text3);display:flex;gap:12px;flex-wrap:wrap}
+.alert-item-del{
+  color:var(--text3);transition:.15s;
+  background:transparent;padding:4px;border-radius:6px;
+}
+.alert-item-del:hover{color:var(--danger);background:rgba(232,72,85,0.1)}
+
+/* ══════════════════════════════════════════════
+   NOTIFICATIONS PANEL
+══════════════════════════════════════════════ */
+.notif-item{
+  padding:14px;border-radius:10px;margin-bottom:8px;
+  border:1px solid var(--border);background:var(--bg3);transition:.15s;cursor:pointer;
+}
+.notif-item:hover{border-color:var(--border2);background:var(--bg2)}
+.notif-item.unread{border-left:3px solid var(--teal);background:rgba(0,198,178,0.04)}
+.notif-item-msg{font-size:0.85rem;color:var(--text2);line-height:1.5;margin-bottom:6px}
+.notif-item-time{font-size:0.72rem;color:var(--text3)}
+
+/* ══════════════════════════════════════════════
+   DASHBOARD / PROFILE
+══════════════════════════════════════════════ */
+.dash-grid{display:grid;grid-template-columns:280px 1fr;gap:32px;padding:40px 0}
+.dash-sidebar{position:sticky;top:88px;height:fit-content}
+.dash-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:28px;
+}
+.dash-user{text-align:center;margin-bottom:24px}
+.dash-avatar-xl{
+  width:80px;height:80px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;color:#000;
+  margin:0 auto 12px;
+}
+.dash-uname{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700}
+.dash-uloc{color:var(--text3);font-size:0.82rem;margin-top:4px}
+.dash-nav{display:flex;flex-direction:column;gap:4px}
+.dash-nav-item{
+  padding:10px 14px;border-radius:8px;cursor:pointer;transition:.15s;
+  display:flex;align-items:center;gap:10px;font-size:0.875rem;color:var(--text2);
+  background:transparent;
+}
+.dash-nav-item:hover{background:var(--bg3);color:var(--text)}
+.dash-nav-item.active{background:rgba(0,198,178,0.1);color:var(--teal);font-weight:500}
+.dash-section{display:none}
+.dash-section.active{display:block}
+.my-listing-row{
+  display:grid;grid-template-columns:1fr auto;align-items:center;
+  background:var(--bg3);border:1px solid var(--border);border-radius:10px;
+  padding:14px 16px;margin-bottom:10px;gap:12px;cursor:pointer;
+}
+.my-listing-row:hover{border-color:var(--border2)}
+.my-listing-title{font-weight:600;font-size:0.9rem;margin-bottom:2px}
+.my-listing-meta{font-size:0.78rem;color:var(--text3);display:flex;gap:12px}
+.status-badge{
+  padding:4px 10px;border-radius:50px;font-size:0.72rem;font-weight:600;
+}
+.status-active{background:rgba(41,217,142,0.1);color:var(--success);border:1px solid rgba(41,217,142,0.2)}
+.status-sold{background:rgba(240,165,0,0.1);color:var(--accent);border:1px solid rgba(240,165,0,0.2)}
+.status-removed{background:rgba(232,72,85,0.1);color:var(--danger);border:1px solid rgba(232,72,85,0.2)}
+
+/* ══════════════════════════════════════════════
+   AUTH PAGES
+══════════════════════════════════════════════ */
+.auth-wrap{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:100px 24px 40px;
+}
+.auth-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:44px;width:100%;max-width:440px;
+  box-shadow:var(--shadow-lg);
+}
+.auth-logo{
+  font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;
+  color:var(--accent);text-align:center;margin-bottom:4px;
+}
+.auth-logo span{color:var(--teal)}
+.auth-sub{text-align:center;color:var(--text3);font-size:0.875rem;margin-bottom:32px}
+.auth-divider{
+  text-align:center;color:var(--text3);font-size:0.82rem;margin:20px 0;
+  position:relative;
+}
+.auth-divider::before{
+  content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--border);z-index:0;
+}
+.auth-divider span{background:var(--card);padding:0 12px;position:relative;z-index:1}
+.auth-footer{text-align:center;margin-top:20px;font-size:0.875rem;color:var(--text3)}
+.auth-footer a{color:var(--teal);font-weight:500}
+.error-msg{
+  background:rgba(232,72,85,0.1);border:1px solid rgba(232,72,85,0.3);
+  color:var(--danger);border-radius:8px;padding:10px 14px;font-size:0.85rem;
+  margin-bottom:16px;display:none;
+}
+.error-msg.show{display:block}
+.success-msg{
+  background:rgba(41,217,142,0.1);border:1px solid rgba(41,217,142,0.3);
+  color:var(--success);border-radius:8px;padding:10px 14px;font-size:0.85rem;
+  margin-bottom:16px;display:none;
+}
+.success-msg.show{display:block}
+
+/* ══════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════ */
+#toast-container{position:fixed;bottom:28px;right:28px;z-index:9999;display:flex;flex-direction:column;gap:10px}
+.toast{
+  padding:14px 20px;border-radius:12px;font-size:0.875rem;
+  background:var(--bg2);border:1px solid var(--border);
+  box-shadow:var(--shadow-lg);color:var(--text);
+  display:flex;align-items:center;gap:10px;
+  animation:slideIn .25s ease;max-width:320px;
+}
+.toast.success{border-color:rgba(41,217,142,0.4);background:rgba(41,217,142,0.08)}
+.toast.error{border-color:rgba(232,72,85,0.4);background:rgba(232,72,85,0.08)}
+.toast.info{border-color:rgba(0,198,178,0.4);background:rgba(0,198,178,0.06)}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* ══════════════════════════════════════════════
+   MODAL
+══════════════════════════════════════════════ */
+.modal-backdrop{
+  position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);
+  z-index:2000;display:flex;align-items:center;justify-content:center;padding:24px;
+  display:none;
+}
+.modal-backdrop.open{display:flex}
+.modal{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:36px;width:100%;max-width:520px;position:relative;
+  box-shadow:var(--shadow-lg);animation:modalIn .25s ease;
+}
+@keyframes modalIn{from{transform:scale(0.95);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-close{
+  position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:8px;
+  background:var(--bg3);border:1px solid var(--border);color:var(--text2);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s;
+}
+.modal-close:hover{color:var(--text);border-color:var(--border2)}
+.modal-title{font-size:1.3rem;font-weight:700;margin-bottom:20px}
+
+/* ══════════════════════════════════════════════
+   LOADING / EMPTY
+══════════════════════════════════════════════ */
+.loading-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px;
+}
+.skeleton{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  overflow:hidden;height:300px;position:relative;
+}
+.skeleton::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.03) 50%,transparent 100%);
+  animation:shimmer 1.5s infinite;
+}
+@keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.empty-state{
+  text-align:center;padding:80px 24px;color:var(--text3);
+}
+.empty-state .icon{font-size:3rem;margin-bottom:16px;opacity:0.4}
+.empty-state h3{font-size:1.1rem;color:var(--text2);margin-bottom:8px}
+.empty-state p{font-size:0.875rem;line-height:1.6}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════ */
+@media(max-width:900px){
+  .search-layout{grid-template-columns:1fr}
+  .filters-panel{position:static}
+  .detail-layout{grid-template-columns:1fr}
+  .alerts-layout{grid-template-columns:1fr}
+  .dash-grid{grid-template-columns:1fr}
+  .dash-sidebar{position:static}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .form-row{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .hero h1{font-size:2rem}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .listings-grid{grid-template-columns:1fr}
+  nav .nav-search{display:none}
+}
+
+/* ══════════════════════════════════════════════
+   CATEGORY SUBCATEGORY VIEW
+══════════════════════════════════════════════ */
+.subcat-header{
+  padding:32px 0 0;
+}
+.subcat-title{font-size:2rem;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px}
+.subcat-desc{color:var(--text3);font-size:0.9rem;margin-bottom:24px}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;color:var(--text3);
+  font-size:0.875rem;margin-bottom:24px;cursor:pointer;transition:.15s;
+  background:transparent;
+}
+.back-btn:hover{color:var(--teal)}
+
+/* scrolled active state */
+nav.scrolled{background:rgba(11,15,20,0.98)}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')">
+      Market<span>Space</span>
+    </div>
+    <div class="nav-search">
+      <span class="nav-search-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </span>
+      <input type="text" id="nav-search-input" placeholder="Search listings, categories…" oninput="handleNavSearch(this.value)" onkeydown="if(event.key==='Enter')doSearch()"/>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-btn ghost" onclick="showPage('search')">Browse</button>
+      <span id="auth-guest" style="display:flex;gap:8px">
+        <button class="nav-btn ghost" onclick="showPage('login')">Log In</button>
+        <button class="nav-btn filled" onclick="showPage('register')">Sign Up</button>
+      </span>
+      <span id="auth-user" style="display:none;align-items:center;gap:8px">
+        <button class="nav-btn teal" onclick="showPage('post')">+ Sell</button>
+        <button class="notif-btn" onclick="showPage('notifications')" title="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-badge" id="notif-badge"></span>
+        </button>
+        <div class="user-avatar" id="user-avatar-nav" onclick="showPage('dashboard')">?</div>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════ HOME PAGE ══════════════ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="container">
+      <div class="hero-eyebrow">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/></svg>
+        Database-Driven Marketplace
+      </div>
+      <h1>Buy & Sell with<br/><span class="line2">Smart Precision</span></h1>
+      <p class="hero-sub">MarketSpace uses relational database intelligence and PL/SQL alerting to connect buyers and sellers instantly — find exactly what you're looking for.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" onclick="showPage('search')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          Browse Listings
+        </button>
+        <button class="btn btn-teal" onclick="showPage('post')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Post for Free
+        </button>
+        <button class="btn btn-outline" onclick="showPage('alerts')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          Set Alerts
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div><div class="stat-val" id="stat-listings">—</div><div class="stat-lbl">Active Listings</div></div>
+        <div><div class="stat-val" id="stat-categories">30+</div><div class="stat-lbl">Categories</div></div>
+        <div><div class="stat-val" id="stat-users">—</div><div class="stat-lbl">Registered Users</div></div>
+        <div><div class="stat-val">PL/SQL</div><div class="stat-lbl">Trigger Engine</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="container">
+      <div class="section-hd">
+        <h2 class="section-title">Shop by <span>Department</span></h2>
+        <a class="section-link" onclick="showPage('search')">See all →</a>
+      </div>
+      <div class="cat-grid" id="home-cats"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <div class="section-hd">
+        <h2 class="section-title">Latest <span>Listings</span></h2>
+        <a class="section-link" onclick="showPage('search')">View all →</a>
+      </div>
+      <div class="listings-grid" id="home-listings">
+        <div class="skeleton"></div><div class="skeleton"></div>
+        <div class="skeleton"></div><div class="skeleton"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SEARCH PAGE ══════════════ -->
+<div class="page" id="page-search">
+  <div class="container-wide">
+    <div class="search-layout">
+      <aside class="filters-panel">
+        <div class="filter-title">Filters</div>
+        <div class="filter-group">
+          <label class="filter-label">Category</label>
+          <select class="filter-input" id="filter-cat" onchange="applyFilters()">
+            <option value="">All Categories</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">Condition</label>
+          <select class="filter-input" id="filter-cond" onchange="applyFilters()">
+            <option value="">Any Condition</option>
+            <option>New</option><option>Like New</option>
+            <option>Good</option><option>Fair</option><option>Poor</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">Price Range (₹)</label>
+          <div class="price-row">
+            <input class="filter-input" type="number" id="filter-min" placeholder="Min" oninput="applyFilters()"/>
+            <input class="filter-input" type="number" id="filter-max" placeholder="Max" oninput="applyFilters()"/>
+          </div>
+        </div>
+        <button class="btn btn-outline btn-sm" style="width:100%" onclick="resetFilters()">Reset Filters</button>
+      </aside>
+      <div>
+        <div class="results-header">
+          <div class="results-count">Showing <strong id="results-count">0</strong> results</div>
+          <select class="sort-select" id="sort-select" onchange="applyFilters()">
+            <option value="newest">Newest First</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+          </select>
+        </div>
+        <div class="listings-grid" id="search-listings">
+          <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ LISTING DETAIL PAGE ══════════════ -->
+<div class="page" id="page-detail">
+  <div class="container">
+    <div class="breadcrumb" id="detail-breadcrumb"></div>
+    <div class="detail-layout">
+      <div>
+        <div class="detail-img" id="detail-img">📦</div>
+        <div style="margin-top:28px">
+          <h3 style="font-size:1rem;color:var(--text2);margin-bottom:16px;display:flex;align-items:center;gap:8px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Messages
+          </h3>
+          <div id="detail-messages" style="max-height:240px;overflow-y:auto;margin-bottom:12px"></div>
+          <div id="msg-form" style="display:none">
+            <textarea class="msg-input" id="msg-body" rows="3" placeholder="Ask the seller a question…"></textarea>
+            <button class="btn btn-teal btn-sm" onclick="sendMessage()">Send Message</button>
+          </div>
+          <div id="msg-login-prompt" style="color:var(--text3);font-size:0.82rem">
+            <a style="color:var(--teal);cursor:pointer" onclick="showPage('login')">Log in</a> to contact the seller
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="seller-card">
+          <div class="seller-card-title">Listing Details</div>
+          <h1 class="detail-title" id="detail-title">—</h1>
+          <div class="detail-price" id="detail-price">—</div>
+          <div class="detail-badges" id="detail-badges"></div>
+          <p class="detail-desc" id="detail-desc">—</p>
+          <div style="border-top:1px solid var(--border);padding-top:20px;margin-bottom:20px">
+            <div class="seller-card-title">Seller</div>
+            <div class="seller-info">
+              <div class="seller-avatar-lg" id="detail-seller-av">?</div>
+              <div>
+                <div class="seller-name" id="detail-seller-name">—</div>
+                <div class="seller-loc" id="detail-seller-loc">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <span id="detail-seller-loc-text">—</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary" style="width:100%;margin-bottom:10px" id="buy-btn" onclick="buyListing()">
+            Buy Now
+          </button>
+          <button class="btn btn-outline" style="width:100%" onclick="setAlertForCategory()">
+            🔔 Alert for Similar Items
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ POST LISTING PAGE ══════════════ -->
+<div class="page" id="page-post">
+  <div class="container">
+    <div class="form-card">
+      <h2 class="form-title">Post a Listing</h2>
+      <p class="form-sub">Fill in the details below. Your item goes live instantly.</p>
+      <div class="error-msg" id="post-error"></div>
+      <div class="success-msg" id="post-success"></div>
+      <div class="form-group">
+        <label class="form-label">Title *</label>
+        <input class="form-input" type="text" id="post-title" placeholder="e.g. Samsung Galaxy S23, like new"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Category * <span id="selected-cat-display" style="color:var(--teal);font-size:0.8rem;margin-left:8px"></span></label>
+        <div class="cat-tree" id="post-cat-tree">Loading categories…</div>
+        <input type="hidden" id="post-cat-id"/>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Price (₹) *</label>
+          <input class="form-input" type="number" id="post-price" placeholder="0.00" min="0"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Condition</label>
+          <select class="form-input" id="post-condition">
+            <option>New</option><option>Like New</option>
+            <option selected>Good</option><option>Fair</option><option>Poor</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-input form-textarea" id="post-desc" placeholder="Describe your item — specs, reason for selling, any defects…"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Image URL (optional)</label>
+        <input class="form-input" type="url" id="post-img" placeholder="https://…"/>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="submitListing()">
+        Post Listing →
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ ALERTS PAGE ══════════════ -->
+<div class="page" id="page-alerts">
+  <div class="container">
+    <div style="padding:40px 0 0">
+      <h2 style="font-size:1.8rem;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px">Price Alerts</h2>
+      <p style="color:var(--text3);font-size:0.9rem;margin-bottom:32px">Get notified when matching items are listed — powered by PL/SQL database triggers.</p>
+    </div>
+    <div class="alerts-layout">
+      <div class="panel">
+        <div class="panel-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Create New Alert
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-input" id="alert-cat">
+            <option value="">Select category…</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Max Price (₹) — leave blank for any price</label>
+          <input class="form-input" type="number" id="alert-price" placeholder="e.g. 50000"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Keywords (optional)</label>
+          <input class="form-input" type="text" id="alert-kw" placeholder="e.g. Samsung, iPhone…"/>
+        </div>
+        <button class="btn btn-teal" style="width:100%;justify-content:center" onclick="createAlert()">
+          Activate Alert
+        </button>
+        <div style="margin-top:20px;padding:16px;background:rgba(0,198,178,0.05);border:1px solid rgba(0,198,178,0.15);border-radius:10px">
+          <p style="font-size:0.78rem;color:var(--text3);line-height:1.7">
+            <strong style="color:var(--teal)">How it works:</strong> When a seller posts a new listing, a <code style="color:var(--accent);font-size:0.75rem">AFTER INSERT</code> PL/SQL trigger fires on the <code style="color:var(--accent);font-size:0.75rem">listings</code> table. It walks all active alerts, checks category (including subcategories), price threshold, and keywords — then auto-inserts a notification row.
+          </p>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          My Active Alerts
+        </div>
+        <div id="alerts-list">
+          <div class="empty-state"><div class="icon">🔔</div><h3>No alerts yet</h3><p>Create an alert to get notified automatically</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ NOTIFICATIONS PAGE ══════════════ -->
+<div class="page" id="page-notifications">
+  <div class="container">
+    <div style="padding:40px 0 0;max-width:720px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+        <h2 style="font-size:1.8rem;font-weight:800;letter-spacing:-0.5px">Notifications</h2>
+        <button class="btn btn-outline btn-sm" onclick="markAllRead()">Mark all read</button>
+      </div>
+      <div id="notif-list">
+        <div class="empty-state"><div class="icon">📭</div><h3>No notifications</h3><p>Your alert notifications will appear here</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DASHBOARD PAGE ══════════════ -->
+<div class="page" id="page-dashboard">
+  <div class="container">
+    <div class="dash-grid">
+      <div class="dash-sidebar">
+        <div class="dash-card">
+          <div class="dash-user">
+            <div class="dash-avatar-xl" id="dash-avatar">?</div>
+            <div class="dash-uname" id="dash-uname">—</div>
+            <div class="dash-uloc" id="dash-uloc">—</div>
+          </div>
+          <div class="dash-nav">
+            <button class="dash-nav-item active" data-section="my-listings" onclick="switchDashSection(this,'my-listings')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              My Listings
+            </button>
+            <button class="dash-nav-item" data-section="my-alerts" onclick="switchDashSection(this,'my-alerts')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              Alerts
+            </button>
+            <button class="dash-nav-item" data-section="my-purchases" onclick="switchDashSection(this,'my-purchases')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              Purchases
+            </button>
+            <button class="dash-nav-item" style="color:var(--danger);margin-top:16px" onclick="logout()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Log Out
+            </button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="dash-section active" id="section-my-listings">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <h3 style="font-size:1.1rem;font-weight:700">My Listings</h3>
+            <button class="btn btn-primary btn-sm" onclick="showPage('post')">+ New Listing</button>
+          </div>
+          <div id="my-listings-list"></div>
+        </div>
+        <div class="dash-section" id="section-my-alerts">
+          <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:20px">My Alerts</h3>
+          <div id="dash-alerts-list"></div>
+        </div>
+        <div class="dash-section" id="section-my-purchases">
+          <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:20px">Purchase History</h3>
+          <div id="purchases-list">
+            <div class="empty-state"><div class="icon">🛍️</div><h3>No purchases yet</h3></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ LOGIN PAGE ══════════════ -->
+<div class="page" id="page-login">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">Market<span>Space</span></div>
+      <div class="auth-sub">Sign in to your account</div>
+      <div class="error-msg" id="login-error"></div>
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input class="form-input" type="text" id="login-user" placeholder="your_username" onkeydown="if(event.key==='Enter')doLogin()"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px" onclick="doLogin()">Log In</button>
+      <div class="auth-footer">Don't have an account? <a onclick="showPage('register')" style="cursor:pointer">Sign up</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ REGISTER PAGE ══════════════ -->
+<div class="page" id="page-register">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">Market<span>Space</span></div>
+      <div class="auth-sub">Create your free account</div>
+      <div class="error-msg" id="reg-error"></div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input class="form-input" type="text" id="reg-user" placeholder="cool_username"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input class="form-input" type="text" id="reg-name" placeholder="Your Name"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="reg-email" placeholder="you@example.com"/>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input class="form-input" type="tel" id="reg-phone" placeholder="9XXXXXXXXX"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Location</label>
+          <input class="form-input" type="text" id="reg-loc" placeholder="City, State"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="reg-pass" placeholder="Min 8 characters"/>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px" onclick="doRegister()">Create Account</button>
+      <div class="auth-footer">Already have an account? <a onclick="showPage('login')" style="cursor:pointer">Log in</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ TOAST CONTAINER ══════════════ -->
+<div id="toast-container"></div>
+
+<!-- ══════════════ ALERT QUICK MODAL ══════════════ -->
+<div class="modal-backdrop" id="alert-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('alert-modal')">✕</button>
+    <div class="modal-title">🔔 Set Price Alert</div>
+    <input type="hidden" id="modal-cat-id"/>
+    <div class="form-group">
+      <label class="form-label">Category</label>
+      <input class="form-input" type="text" id="modal-cat-name" readonly/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Max Price (₹)</label>
+      <input class="form-input" type="number" id="modal-price" placeholder="Leave blank for any price"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Keywords (optional)</label>
+      <input class="form-input" type="text" id="modal-kw" placeholder="e.g. Samsung"/>
+    </div>
+    <button class="btn btn-teal" style="width:100%;justify-content:center" onclick="submitModalAlert()">Save Alert</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+const API = '/api';
+let currentUser = null;
+let currentListingId = null;
+let categoryFlat = [];
+let notifInterval = null;
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+async function init() {
+  await checkAuth();
+  loadHomeData();
+  loadCategoriesToFilters();
+  window.scrollTo(0,0);
+}
+
+async function checkAuth() {
+  try {
+    const r = await fetch(`${API}/auth/me`, {credentials:'include'});
+    const d = await r.json();
+    if (d.logged_in) {
+      currentUser = d;
+      setUserUI(true);
+      startNotifPoll();
+    } else {
+      setUserUI(false);
+    }
+  } catch(e) { setUserUI(false); }
+}
+
+function setUserUI(loggedIn) {
+  document.getElementById('auth-guest').style.display = loggedIn ? 'none' : 'flex';
+  document.getElementById('auth-user').style.display  = loggedIn ? 'flex' : 'none';
+  if (loggedIn && currentUser) {
+    const initials = (currentUser.username||'?')[0].toUpperCase();
+    document.getElementById('user-avatar-nav').textContent = initials;
+    document.getElementById('dash-avatar').textContent  = initials;
+    document.getElementById('dash-uname').textContent   = currentUser.username;
+  }
+}
+
+// ═══════════════════════════════════════════════
+// PAGE NAVIGATION
+// ═══════════════════════════════════════════════
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const pg = document.getElementById('page-'+name);
+  if (pg) {
+    pg.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  // Page-specific loaders
+  if (name==='search')        { loadSearchListings(); }
+  if (name==='alerts')        { loadAlertsPage(); }
+  if (name==='notifications') { loadNotifications(); }
+  if (name==='dashboard')     { loadDashboard(); }
+  if (name==='post')          { loadPostCategoryTree(); }
+  if (name==='home')          { loadHomeData(); }
+}
+
+// ═══════════════════════════════════════════════
+// HOME DATA
+// ═══════════════════════════════════════════════
+async function loadHomeData() {
+  await Promise.all([loadHomeCategories(), loadHomeListings()]);
+}
+
+async function loadHomeCategories() {
+  try {
+    const r = await fetch(`${API}/categories`);
+    const cats = await r.json();
+    const icons = {
+      'Electronics':'💻','Vehicles':'🚗','Fashion':'👕','Home & Garden':'🏠',
+      'Books & Media':'📚','Sports':'⚽','Jobs':'💼','Services':'🔧'
+    };
+    const el = document.getElementById('home-cats');
+    el.innerHTML = cats.map(c => `
+      <div class="cat-card" onclick="browseCategory(${c.category_id},'${escHtml(c.name)}')">
+        <div class="cat-icon">${icons[c.name]||'🏷️'}</div>
+        <div class="cat-name">${escHtml(c.name)}</div>
+        <div class="cat-count">${c.listing_count||0} listings</div>
+      </div>
+    `).join('');
+  } catch(e) {}
+}
+
+async function loadHomeListings() {
+  try {
+    const r = await fetch(`${API}/listings`);
+    const listings = await r.json();
+    document.getElementById('stat-listings').textContent = listings.length;
+    document.getElementById('home-listings').innerHTML = listings.slice(0,8).map(renderListingCard).join('');
+  } catch(e) {
+    document.getElementById('home-listings').innerHTML = '<div class="empty-state"><div class="icon">📭</div><h3>Could not load listings</h3><p>Make sure the backend is running.</p></div>';
+  }
+}
+
+// ═══════════════════════════════════════════════
+// CATEGORY BROWSE
+// ═══════════════════════════════════════════════
+function browseCategory(catId, catName) {
+  showPage('search');
+  document.getElementById('filter-cat').value = catId || '';
+  applyFilters();
+}
+
+async function loadCategoriesToFilters() {
+  try {
+    const r = await fetch(`${API}/categories/tree`);
+    const tree = await r.json();
+    categoryFlat = [];
+    flattenTree(tree, categoryFlat, 0);
+
+    // Search filter
+    const sel = document.getElementById('filter-cat');
+    sel.innerHTML = '<option value="">All Categories</option>' +
+      categoryFlat.map(c => `<option value="${c.category_id}">${'— '.repeat(c.level)}${escHtml(c.name)}</option>`).join('');
+
+    // Alert cat select
+    const asel = document.getElementById('alert-cat');
+    asel.innerHTML = '<option value="">Select category…</option>' +
+      categoryFlat.map(c => `<option value="${c.category_id}">${'— '.repeat(c.level)}${escHtml(c.name)}</option>`).join('');
+  } catch(e) {}
+}
+
+function flattenTree(nodes, arr, level) {
+  for (const n of nodes) {
+    arr.push({...n, level});
+    if (n.children && n.children.length) flattenTree(n.children, arr, level+1);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// SEARCH / FILTER
+// ═══════════════════════════════════════════════
+let searchTimer;
+function handleNavSearch(val) {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => { if(val.trim()) doSearch(val); }, 400);
+}
+function doSearch(kw) {
+  showPage('search');
+  if (kw) document.getElementById('nav-search-input').value = kw;
+  applyFilters();
+}
+
+async function applyFilters() {
+  const kw   = document.getElementById('nav-search-input').value;
+  const cat  = document.getElementById('filter-cat').value;
+  const cond = document.getElementById('filter-cond').value;
+  const minp = document.getElementById('filter-min').value;
+  const maxp = document.getElementById('filter-max').value;
+  const sort = document.getElementById('sort-select').value;
+
+  const params = new URLSearchParams();
+  if (kw)   params.set('keyword',    kw);
+  if (cat)  params.set('category_id',cat);
+  if (cond) params.set('condition',  cond);
+  if (minp) params.set('min_price',  minp);
+  if (maxp) params.set('max_price',  maxp);
+  if (sort) params.set('sort',       sort);
+
+  document.getElementById('search-listings').innerHTML =
+    '<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>';
+
+  try {
+    const r = await fetch(`${API}/listings?${params}`, {credentials:'include'});
+    const listings = await r.json();
+    document.getElementById('results-count').textContent = listings.length;
+    document.getElementById('search-listings').innerHTML = listings.length
+      ? listings.map(renderListingCard).join('')
+      : '<div class="empty-state"><div class="icon">🔍</div><h3>No results found</h3><p>Try adjusting your filters</p></div>';
+  } catch(e) {
+    document.getElementById('search-listings').innerHTML = '<div class="empty-state"><div class="icon">⚠️</div><h3>Error loading listings</h3></div>';
+  }
+}
+
+async function loadSearchListings() { await applyFilters(); }
+
+function resetFilters() {
+  document.getElementById('filter-cat').value  = '';
+  document.getElementById('filter-cond').value = '';
+  document.getElementById('filter-min').value  = '';
+  document.getElementById('filter-max').value  = '';
+  applyFilters();
+}
+
+// ═══════════════════════════════════════════════
+// LISTING CARD RENDERER
+// ═══════════════════════════════════════════════
+function renderListingCard(l) {
+  const condClass = {
+    'New':'badge-new','Like New':'badge-like-new','Good':'badge-good',
+    'Fair':'badge-good','Poor':'badge-good'
+  }[l.condition_type]||'badge-good';
+  const ago = timeAgo(l.created_at);
+  return `
+    <div class="listing-card" onclick="openListing(${l.listing_id})">
+      <div class="listing-img">
+        ${l.image_url
+          ? `<img src="${escHtml(l.image_url)}" alt="${escHtml(l.title)}" onerror="this.parentNode.innerHTML='<div class=listing-img-placeholder>📦</div>'">`
+          : '<div class="listing-img-placeholder">📦</div>'}
+        <span class="listing-badge ${condClass}">${escHtml(l.condition_type||'Good')}</span>
+      </div>
+      <div class="listing-body">
+        <div class="listing-cat">${escHtml(l.category_name||'')}</div>
+        <div class="listing-title">${escHtml(l.title)}</div>
+        <div class="listing-price">₹${fmtPrice(l.price)}</div>
+        <div class="listing-footer">
+          <div class="listing-seller">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            ${escHtml(l.seller_username||l.seller_name||'Seller')}
+          </div>
+          <div class="listing-time">${ago}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════
+// LISTING DETAIL
+// ═══════════════════════════════════════════════
+async function openListing(id) {
+  currentListingId = id;
+  showPage('detail');
+
+  try {
+    const r = await fetch(`${API}/listings/${id}`);
+    const l = await r.json();
+
+    document.getElementById('detail-title').textContent  = l.title;
+    document.getElementById('detail-price').textContent  = '₹' + fmtPrice(l.price);
+    document.getElementById('detail-desc').textContent   = l.description || 'No description provided.';
+    document.getElementById('detail-seller-name').textContent     = l.seller_name||l.seller_username;
+    document.getElementById('detail-seller-loc-text').textContent = l.seller_location||'Location not set';
+    document.getElementById('detail-seller-av').textContent       = (l.seller_username||'?')[0].toUpperCase();
+
+    // Image
+    const imgEl = document.getElementById('detail-img');
+    imgEl.innerHTML = l.image_url
+      ? `<img src="${escHtml(l.image_url)}" alt="${escHtml(l.title)}">`
+      : '📦';
+
+    // Badges
+    document.getElementById('detail-badges').innerHTML = `
+      <span class="badge teal">${escHtml(l.condition_type||'Good')}</span>
+      <span class="badge accent">${escHtml(l.category_name||'')}</span>
+      ${l.parent_category_name ? `<span class="badge">${escHtml(l.parent_category_name)}</span>` : ''}
+      <span class="badge">${timeAgo(l.created_at)}</span>
+    `;
+
+    // Breadcrumb
+    const bc = document.getElementById('detail-breadcrumb');
+    bc.innerHTML = `
+      <span onclick="showPage('home')">Home</span><span class="sep">›</span>
+      ${l.parent_category_name ? `<span onclick="browseCategory(${l.parent_category_id},'${escHtml(l.parent_category_name)}')">${escHtml(l.parent_category_name)}</span><span class="sep">›</span>` : ''}
+      <span onclick="browseCategory(${l.category_id},'${escHtml(l.category_name)}')">${escHtml(l.category_name)}</span>
+      <span class="sep">›</span><span style="color:var(--text2)">${escHtml(l.title.substring(0,30))}…</span>
+    `;
+
+    // Buy button
+    const buyBtn = document.getElementById('buy-btn');
+    if (l.status !== 'active') {
+      buyBtn.textContent = l.status === 'sold' ? 'Sold Out' : 'Unavailable';
+      buyBtn.disabled = true; buyBtn.style.opacity='0.5';
+    } else {
+      buyBtn.textContent = 'Buy Now'; buyBtn.disabled = false; buyBtn.style.opacity='1';
+    }
+
+    // Messages
+    const msgForm = document.getElementById('msg-form');
+    const msgLogin = document.getElementById('msg-login-prompt');
+    if (currentUser) { msgForm.style.display='block'; msgLogin.style.display='none'; }
+    else             { msgForm.style.display='none';  msgLogin.style.display='block'; }
+
+    loadMessages(id);
+
+    // Store category for alert shortcut
+    document.getElementById('modal-cat-id').value  = l.category_id;
+    document.getElementById('modal-cat-name').value = l.category_name;
+  } catch(e) {
+    toast('Failed to load listing','error');
+  }
+}
+
+async function loadMessages(listingId) {
+  if (!currentUser) return;
+  try {
+    const r = await fetch(`${API}/messages/${listingId}`, {credentials:'include'});
+    const msgs = await r.json();
+    const el = document.getElementById('detail-messages');
+    el.innerHTML = msgs.length
+      ? msgs.map(m => `
+          <div style="margin-bottom:10px;padding:10px 12px;border-radius:8px;
+            background:${m.sender_id==currentUser.user_id?'rgba(0,198,178,0.1)':'var(--bg3)'};
+            border:1px solid ${m.sender_id==currentUser.user_id?'rgba(0,198,178,0.2)':'var(--border)'}">
+            <div style="font-size:0.75rem;color:var(--text3);margin-bottom:4px;font-weight:500">
+              ${escHtml(m.sender_username)} · ${timeAgo(m.sent_at)}
+            </div>
+            <div style="font-size:0.875rem">${escHtml(m.body)}</div>
+          </div>
+        `).join('')
+      : '<div style="color:var(--text3);font-size:0.82rem;padding:8px 0">No messages yet. Start the conversation!</div>';
+  } catch(e) {}
+}
+
+async function sendMessage() {
+  const body = document.getElementById('msg-body').value.trim();
+  if (!body) return;
+  if (!currentUser) { showPage('login'); return; }
+  try {
+    const detail = await (await fetch(`${API}/listings/${currentListingId}`)).json();
+    const r = await fetch(`${API}/messages`, {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({listing_id: currentListingId, receiver_id: detail.seller_id||detail.seller_username, body})
+    });
+    // Get receiver id from listing detail endpoint
+    if (r.ok) {
+      document.getElementById('msg-body').value = '';
+      toast('Message sent!','success');
+      loadMessages(currentListingId);
+    }
+  } catch(e) { toast('Failed to send message','error'); }
+}
+
+async function buyListing() {
+  if (!currentUser) { showPage('login'); return; }
+  if (!confirm('Confirm purchase?')) return;
+  try {
+    const r = await fetch(`${API}/listings/${currentListingId}/buy`, {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'}, body:'{}'
+    });
+    const d = await r.json();
+    if (r.ok) {
+      toast('Purchase successful! 🎉','success');
+      openListing(currentListingId);
+    } else {
+      toast(d.error||'Purchase failed','error');
+    }
+  } catch(e) { toast('Network error','error'); }
+}
+
+function setAlertForCategory() {
+  if (!currentUser) { showPage('login'); return; }
+  document.getElementById('alert-modal').classList.add('open');
+}
+
+// ═══════════════════════════════════════════════
+// POST LISTING
+// ═══════════════════════════════════════════════
+async function loadPostCategoryTree() {
+  if (!currentUser) { showPage('login'); return; }
+  try {
+    const r = await fetch(`${API}/categories/tree`);
+    const tree = await r.json();
+    const flat = [];
+    flattenTree(tree, flat, 0);
+    const el = document.getElementById('post-cat-tree');
+    el.innerHTML = flat.map(c => `
+      <div class="cat-tree-item" data-id="${c.category_id}" data-name="${escHtml(c.name)}"
+           onclick="selectPostCategory(${c.category_id},'${escHtml(c.name)}')">
+        ${'<span class="indent"></span>'.repeat(c.level)}
+        <span>${escHtml(c.name)}</span>
+        ${c.children&&c.children.length?'<span class="has-children">▼</span>':''}
+      </div>
+    `).join('');
+  } catch(e) {}
+}
+
+function selectPostCategory(id, name) {
+  document.getElementById('post-cat-id').value = id;
+  document.getElementById('selected-cat-display').textContent = '→ ' + name;
+  document.querySelectorAll('.cat-tree-item').forEach(el => {
+    el.classList.toggle('selected', el.dataset.id == id);
+  });
+}
+
+async function submitListing() {
+  if (!currentUser) { showPage('login'); return; }
+  const title    = document.getElementById('post-title').value.trim();
+  const catId    = document.getElementById('post-cat-id').value;
+  const price    = document.getElementById('post-price').value;
+  const cond     = document.getElementById('post-condition').value;
+  const desc     = document.getElementById('post-desc').value.trim();
+  const imgUrl   = document.getElementById('post-img').value.trim();
+
+  const errEl = document.getElementById('post-error');
+  const sucEl = document.getElementById('post-success');
+  errEl.classList.remove('show'); sucEl.classList.remove('show');
+
+  if (!title || !catId || !price) {
+    errEl.textContent = 'Please fill in all required fields (title, category, price).';
+    errEl.classList.add('show'); return;
+  }
+
+  try {
+    const r = await fetch(`${API}/listings`, {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({title, category_id:parseInt(catId), price:parseFloat(price), condition:cond, description:desc, image_url:imgUrl||null})
+    });
+    const d = await r.json();
+    if (r.ok) {
+      sucEl.textContent = `Listing posted! ID: ${d.listing_id}. Alerts are firing in the background...`;
+      sucEl.classList.add('show');
+      toast('Listing posted! PL/SQL alert trigger fired 🔔','success');
+      // Reset form
+      ['post-title','post-price','post-desc','post-img'].forEach(id => document.getElementById(id).value='');
+      document.getElementById('post-cat-id').value='';
+      document.getElementById('selected-cat-display').textContent='';
+      document.querySelectorAll('.cat-tree-item').forEach(el=>el.classList.remove('selected'));
+    } else {
+      errEl.textContent = d.error||'Failed to post listing'; errEl.classList.add('show');
+    }
+  } catch(e) { errEl.textContent='Network error'; errEl.classList.add('show'); }
+}
+
+// ═══════════════════════════════════════════════
+// ALERTS
+// ═══════════════════════════════════════════════
+async function loadAlertsPage() {
+  if (!currentUser) { showPage('login'); return; }
+  await loadAlertsList('alerts-list');
+}
+
+async function loadAlertsList(containerId) {
+  try {
+    const r = await fetch(`${API}/alerts`, {credentials:'include'});
+    const alerts = await r.json();
+    const el = document.getElementById(containerId);
+    el.innerHTML = alerts.length
+      ? alerts.filter(a=>a.is_active).map(a => `
+          <div class="alert-item">
+            <div class="alert-item-icon">🔔</div>
+            <div class="alert-item-body">
+              <div class="alert-item-cat">${escHtml(a.category_name)}</div>
+              <div class="alert-item-meta">
+                ${a.max_price ? `<span>Max ₹${fmtPrice(a.max_price)}</span>` : '<span>Any price</span>'}
+                ${a.keywords  ? `<span>Keywords: ${escHtml(a.keywords)}</span>` : ''}
+              </div>
+            </div>
+            <button class="alert-item-del" onclick="deleteAlert(${a.alert_id})" title="Deactivate">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+            </button>
+          </div>
+        `).join('')
+      : '<div class="empty-state"><div class="icon">🔔</div><h3>No active alerts</h3></div>';
+  } catch(e) {}
+}
+
+async function createAlert() {
+  if (!currentUser) { showPage('login'); return; }
+  const catId = document.getElementById('alert-cat').value;
+  const price = document.getElementById('alert-price').value;
+  const kw    = document.getElementById('alert-kw').value.trim();
+  if (!catId) { toast('Please select a category','error'); return; }
+  try {
+    const r = await fetch(`${API}/alerts`, {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({category_id:parseInt(catId), max_price:price?parseFloat(price):null, keywords:kw||null})
+    });
+    const d = await r.json();
+    if (r.ok) {
+      toast(`Alert ${d.status}! You'll be notified automatically.`,'success');
+      document.getElementById('alert-price').value='';
+      document.getElementById('alert-kw').value='';
+      loadAlertsList('alerts-list');
+    } else { toast(d.error||'Failed','error'); }
+  } catch(e) { toast('Network error','error'); }
+}
+
+async function deleteAlert(id) {
+  try {
+    await fetch(`${API}/alerts/${id}`, {method:'DELETE', credentials:'include'});
+    toast('Alert deactivated','info');
+    loadAlertsList('alerts-list');
+    loadAlertsList('dash-alerts-list');
+  } catch(e) {}
+}
+
+async function submitModalAlert() {
+  if (!currentUser) { closeModal('alert-modal'); showPage('login'); return; }
+  const catId = document.getElementById('modal-cat-id').value;
+  const price = document.getElementById('modal-price').value;
+  const kw    = document.getElementById('modal-kw').value.trim();
+  try {
+    const r = await fetch(`${API}/alerts`, {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({category_id:parseInt(catId), max_price:price?parseFloat(price):null, keywords:kw||null})
+    });
+    if (r.ok) {
+      toast('Alert set! PL/SQL trigger will notify you.','success');
+      closeModal('alert-modal');
+    }
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════
+// NOTIFICATIONS
+// ═══════════════════════════════════════════════
+async function loadNotifications() {
+  if (!currentUser) { showPage('login'); return; }
+  try {
+    const r = await fetch(`${API}/notifications`, {credentials:'include'});
+    const notifs = await r.json();
+    const el = document.getElementById('notif-list');
+    el.innerHTML = notifs.length
+      ? notifs.map(n => `
+          <div class="notif-item ${n.is_read?'':'unread'}" onclick="markRead(${n.notification_id});openListing(${n.listing_id})">
+            <div class="notif-item-msg">
+              ${n.is_read?'':'<span style="color:var(--teal);font-weight:600">NEW · </span>'}
+              ${escHtml(n.message)}
+            </div>
+            <div class="notif-item-time">${timeAgo(n.created_at)}</div>
+          </div>
+        `).join('')
+      : '<div class="empty-state"><div class="icon">📭</div><h3>No notifications</h3><p>Set price alerts to get notified when matching items appear</p></div>';
+    updateNotifBadge();
+  } catch(e) {}
+}
+
+async function markRead(nid) {
+  try {
+    await fetch(`${API}/notifications/mark-read`, {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({notification_id:nid})
+    });
+    updateNotifBadge();
+  } catch(e) {}
+}
+
+async function markAllRead() {
+  try {
+    await fetch(`${API}/notifications/mark-read`, {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'}, body:'{}'
+    });
+    toast('All notifications marked as read','info');
+    loadNotifications();
+  } catch(e) {}
+}
+
+async function updateNotifBadge() {
+  if (!currentUser) return;
+  try {
+    const r = await fetch(`${API}/notifications/unread-count`, {credentials:'include'});
+    const d = await r.json();
+    const badge = document.getElementById('notif-badge');
+    badge.classList.toggle('show', d.count > 0);
+  } catch(e) {}
+}
+
+function startNotifPoll() {
+  updateNotifBadge();
+  notifInterval = setInterval(updateNotifBadge, 30000);
+}
+
+// ═══════════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════════
+async function loadDashboard() {
+  if (!currentUser) { showPage('login'); return; }
+  loadMyListings();
+  loadAlertsList('dash-alerts-list');
+}
+
+async function loadMyListings() {
+  try {
+    const r = await fetch(`${API}/my/listings`, {credentials:'include'});
+    const listings = await r.json();
+    const el = document.getElementById('my-listings-list');
+    el.innerHTML = listings.length
+      ? listings.map(l => `
+          <div class="my-listing-row" onclick="openListing(${l.listing_id})">
+            <div>
+              <div class="my-listing-title">${escHtml(l.title)}</div>
+              <div class="my-listing-meta">
+                <span>₹${fmtPrice(l.price)}</span>
+                <span>${escHtml(l.category_name)}</span>
+                <span>${timeAgo(l.created_at)}</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="status-badge status-${l.status}">${l.status}</span>
+              ${l.status==='active'?`<button class="btn btn-danger btn-xs" onclick="event.stopPropagation();removeListing(${l.listing_id})">Remove</button>`:''}
+            </div>
+          </div>
+        `).join('')
+      : '<div class="empty-state"><div class="icon">📦</div><h3>No listings yet</h3><p><a style="color:var(--teal);cursor:pointer" onclick="showPage(\'post\')">Post your first item</a></p></div>';
+  } catch(e) {}
+}
+
+async function removeListing(id) {
+  if (!confirm('Remove this listing?')) return;
+  try {
+    const r = await fetch(`${API}/listings/${id}`, {method:'DELETE', credentials:'include'});
+    if (r.ok) { toast('Listing removed','info'); loadMyListings(); }
+    else { const d=await r.json(); toast(d.error||'Failed','error'); }
+  } catch(e) {}
+}
+
+function switchDashSection(btn, section) {
+  document.querySelectorAll('.dash-nav-item').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.dash-section').forEach(s => s.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('section-'+section).classList.add('active');
+}
+
+// ═══════════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════════
+async function doLogin() {
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-error');
+  errEl.classList.remove('show');
+
+  try {
+    const r = await fetch(`${API}/auth/login`, {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({username:user, password:pass})
+    });
+    const d = await r.json();
+    if (r.ok) {
+      currentUser = d;
+      setUserUI(true);
+      toast(`Welcome back, ${d.username}! 👋`,'success');
+      showPage('home');
+      startNotifPoll();
+    } else {
+      errEl.textContent = d.error||'Login failed'; errEl.classList.add('show');
+    }
+  } catch(e) { errEl.textContent='Network error'; errEl.classList.add('show'); }
+}
+
+async function doRegister() {
+  const errEl = document.getElementById('reg-error');
+  errEl.classList.remove('show');
+  const data = {
+    username:  document.getElementById('reg-user').value.trim(),
+    full_name: document.getElementById('reg-name').value.trim(),
+    email:     document.getElementById('reg-email').value.trim(),
+    phone:     document.getElementById('reg-phone').value.trim(),
+    location:  document.getElementById('reg-loc').value.trim(),
+    password:  document.getElementById('reg-pass').value,
+  };
+  if (!data.username||!data.email||!data.password||!data.full_name) {
+    errEl.textContent='Please fill in all required fields.'; errEl.classList.add('show'); return;
+  }
+  try {
+    const r = await fetch(`${API}/auth/register`, {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(data)
+    });
+    const d = await r.json();
+    if (r.ok) {
+      currentUser = d; setUserUI(true);
+      toast(`Welcome to MarketSpace, ${d.username}! 🎉`,'success');
+      showPage('home'); startNotifPoll();
+    } else {
+      errEl.textContent=d.error||'Registration failed'; errEl.classList.add('show');
+    }
+  } catch(e) { errEl.textContent='Network error'; errEl.classList.add('show'); }
+}
+
+async function logout() {
+  await fetch(`${API}/auth/logout`, {method:'POST', credentials:'include'});
+  currentUser = null; setUserUI(false);
+  clearInterval(notifInterval);
+  toast('Logged out. See you soon!','info');
+  showPage('home');
+}
+
+// ═══════════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════════
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-backdrop').forEach(m =>
+  m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); })
+);
+
+// ═══════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════
+function toast(msg, type='info') {
+  const icons = {success:'✅',error:'❌',info:'ℹ️'};
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span>${escHtml(msg)}</span>`;
+  document.getElementById('toast-container').appendChild(el);
+  setTimeout(() => { el.style.animation='slideIn .25s ease reverse'; setTimeout(()=>el.remove(),250); }, 3500);
+}
+
+// ═══════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════
+function escHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtPrice(p) {
+  return Number(p).toLocaleString('en-IN');
+}
+function timeAgo(iso) {
+  if (!iso) return '';
+  const diff = (Date.now() - new Date(iso)) / 1000;
+  if (diff < 60)   return 'just now';
+  if (diff < 3600) return Math.floor(diff/60)+'m ago';
+  if (diff < 86400)return Math.floor(diff/3600)+'h ago';
+  return Math.floor(diff/86400)+'d ago';
+}
+
+// Navbar scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// ═══════════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════════
+init();
+</script>
+</body>
+</html>
